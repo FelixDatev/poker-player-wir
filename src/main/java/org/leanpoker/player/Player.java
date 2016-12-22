@@ -77,6 +77,8 @@ public class Player {
 
             input.concat("]");
 
+            System.out.println(input);
+
             URL url = new URL(input);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
