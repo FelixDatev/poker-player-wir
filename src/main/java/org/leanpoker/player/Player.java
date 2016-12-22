@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Player {
@@ -16,13 +18,15 @@ public class Player {
             JsonObject wir = players.get(o.get("in_action").getAsInt()).getAsJsonObject();
 
         JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
-        if ( isPair(holeCards) ) {
+        JsonArray communityCards = o.get("community_cards").getAsJsonArray();
+
+        if ( isPair(holeCards, communityCards) ) {
             return raise(o, 100);
         } else if (containsAce(holeCards) ) {
             return raise(o, 50);
         }
 
-        return raise(o, 0);
+        return 0;
     }
 
     public static void showdown(JsonElement game) {
@@ -40,7 +44,20 @@ public class Player {
         return o.get("current_buy_in").getAsInt() - wir.get("bet").getAsInt() + o.get("minimum_raise").getAsInt() + amount;
     }
 
-    public static boolean isPair(JsonArray holeCards) {
+    public static void callRank() {
+
+    }
+
+    public static boolean isPair(JsonArray holeCards, JsonArray communityCards) {
+
+        List<Card> cards = new ArrayList<Card>();
+
+        cards.add(new Card(holeCards.get(0).getAsJsonObject()));
+        cards.add(new Card(holeCards.get(1).getAsJsonObject()));
+
+        for (JsonElement ccard : communityCards ) {
+            cards.add(new Card(ccard.getAsJsonObject()));
+        }
 
         Card card1 = new Card(holeCards.get(0).getAsJsonObject());
         Card card2 = new Card(holeCards.get(1).getAsJsonObject());
@@ -62,4 +79,6 @@ public class Player {
             return false;
         }
     }
+
+
 }
