@@ -73,7 +73,7 @@ public class Player {
             String separator = "";
 
             for (Card card:cards) {
-                String i = String.format("%s{\"rank\":\"%s\",\"suit\":\"%s\"}", separator, card.rank, card.suit);
+                String i = String.format("%s{'rank':'%s','suit':'%s'}", separator, card.rank, card.suit);
                 input = input.concat(i);
                 separator = ",";
             }
