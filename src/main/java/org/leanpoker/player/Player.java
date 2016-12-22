@@ -3,6 +3,7 @@ package org.leanpoker.player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import jdk.nashorn.internal.runtime.URIUtils;
 
 import java.io.BufferedReader;
@@ -26,12 +27,18 @@ public class Player {
         JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
         JsonArray communityCards = o.get("community_cards").getAsJsonArray();
 
-        callRank(holeCards, communityCards);
 
-        if ( isPair(holeCards) ) {
-            return raise(o, 100);
-        } else if (containsAce(holeCards) ) {
-            return raise(o, 50);
+
+        if (communityCards.size() > 2) {
+            int rank = callRank(holeCards, communityCards);
+
+            return raise(o, 100*rank);
+        } else {
+            if (isPair(holeCards)) {
+                return raise(o, 100);
+            } else if (containsAce(holeCards)) {
+                return raise(o, 50);
+            }
         }
 
         return 0;
@@ -53,7 +60,7 @@ public class Player {
         return o.get("current_buy_in").getAsInt() - wir.get("bet").getAsInt() + o.get("minimum_raise").getAsInt() + amount;
     }
 
-    public static void callRank(JsonArray holeCards, JsonArray communityCards) {
+    public static int callRank(JsonArray holeCards, JsonArray communityCards) {
 
         try {
 
@@ -97,7 +104,7 @@ public class Player {
                 conn.setRequestProperty("Content-Type", "application/json");
 
 
-                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                if (conn.getResponseCode() != 200) {
                     throw new RuntimeException("Failed : HTTP error code : "
                             + conn.getResponseCode());
                 }
@@ -111,8 +118,15 @@ public class Player {
                     System.out.println(output);
                 }
 
+                JsonParser parser = new JsonParser();
+                JsonObject out = parser.parse(output).getAsJsonObject();
+
                 conn.disconnect();
+
+                return out.get("rank").getAsInt();
             }
+
+            return 0;
 
         } catch (MalformedURLException e) {
 
@@ -123,6 +137,8 @@ public class Player {
             e.printStackTrace();
 
         }
+
+        return 0;
     }
 
     public static boolean isPair(JsonArray holeCards) {
