@@ -72,7 +72,7 @@ public class Player {
             String separator = "";
 
             for (Card card:cards) {
-                String i = String.format("%s{\"rank\"%%3A\"%s\",\"suit\"%%3A\"%s\"}", separator, card.rank, card.suit);
+                String i = String.format("%s{\"rank\":\"%s\",\"suit\":\"%s\"}", separator, card.rank, card.suit);
                 input = input.concat(i);
                 separator = ",";
             }
@@ -80,7 +80,7 @@ public class Player {
 
 
             input = input.concat("]");
-            //input = URLEncoder.encode(input, "UTF-8");
+            input = URLEncoder.encode(input, "UTF-8");
 
             String urlString = "http://rainman.leanpoker.org/rank?cards=".concat(input);
 
