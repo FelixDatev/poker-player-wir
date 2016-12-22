@@ -13,18 +13,15 @@ public class Player {
     public static int betRequest(JsonElement request) {
             JsonObject o = request.getAsJsonObject();
             JsonArray players = o.get("players").getAsJsonArray();
-            for (JsonElement player: players ) {
-                JsonObject playerObj = player.getAsJsonObject();
-                System.out.print("HOLAXXX");
-                if (playerObj.get("name").getAsString().equals("WIR")) {
-                    JsonArray holeCards = playerObj.get("hole_cards").getAsJsonArray();
-                    if ( isPair(holeCards) ) {
-                        return o.get("small_blind").getAsInt() * 100;
-                    } else if (containsAce(holeCards) ) {
-                        return o.get("small_blind").getAsInt() * 50;
-                    }
-                }
-            }
+            JsonObject wir = players.get(o.get("in_action").getAsInt()).getAsJsonObject();
+
+        JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
+        if ( isPair(holeCards) ) {
+            return o.get("small_blind").getAsInt() * 100;
+        } else if (containsAce(holeCards) ) {
+            return o.get("small_blind").getAsInt() * 50;
+        }
+
         return o.get("small_blind").getAsInt() + o.get("current_buy_in").getAsInt();
     }
 
