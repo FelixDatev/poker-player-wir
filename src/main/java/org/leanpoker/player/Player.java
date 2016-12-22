@@ -70,10 +70,15 @@ public class Player {
             //String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
             String input = "http://rainman.leanpoker.org/rank?cards=[";
 
+            String separator = "";
+
             for (Card card:cards) {
-                String i = String.format("{\"rank\":\"%s\",\"suit\":\"%s\"},", card.rank, card.suit);
+                String i = String.format("%s{\"rank\":\"%s\",\"suit\":\"%s\"}", separator, card.rank, card.suit);
                 input = input.concat(i);
+                separator = ",";
             }
+
+
 
             input = input.concat("]");
 
