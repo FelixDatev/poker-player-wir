@@ -61,7 +61,7 @@ public class Player {
             URL url = new URL("http://rainman.leanpoker.org/rank");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
 
 
