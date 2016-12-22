@@ -35,6 +35,8 @@ public class Player {
                 return raise(o, 5);
             } else if (containsAce(holeCards)) {
                 return raise(o, 2);
+            } else if (isOneCardHigherThanNine(holeCards)) {
+                return 0;
             }
         }
 
@@ -164,6 +166,19 @@ public class Player {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static boolean isOneCardHigherThanNine(JsonArray holeCards) {
+        Card card1 = new Card(holeCards.get(0).getAsJsonObject());
+        Card card2 = new Card(holeCards.get(1).getAsJsonObject());
+
+
+
+        if (card1.rank.equals("10") || card1.rank.equals("K") || card1.rank.equals("J") || card1.rank.equals("Q") || card1.rank.equals("A") || card2.rank.equals("10") || card2.rank.equals("K") || card2.rank.equals("J") || card2.rank.equals("Q") || card2.rank.equals("A")) {
+            return false;
+        } else {
+            return true;
         }
     }
 
