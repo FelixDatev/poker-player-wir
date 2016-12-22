@@ -19,7 +19,7 @@ public class Player {
         if ( isPair(holeCards) ) {
             return raise(o, 100);
         } else if (containsAce(holeCards) ) {
-            //return raise(o, 50);
+            return raise(o, 50);
         }
 
         return raise(o, 0);
