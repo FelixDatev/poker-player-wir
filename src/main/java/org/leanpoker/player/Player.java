@@ -17,9 +17,9 @@ public class Player {
 
         JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
         if ( isPair(holeCards) ) {
-            //return o.get("small_blind").getAsInt() * 100;
+            return raise(o, 100);
         } else if (containsAce(holeCards) ) {
-            //return o.get("small_blind").getAsInt() * 50;
+            return raise(o, 50);
         }
 
         return raise(o, 0);
