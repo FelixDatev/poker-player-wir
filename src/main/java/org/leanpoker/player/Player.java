@@ -39,9 +39,17 @@ public class Player {
 
         } else {
             if (isPair(holeCards)) {
-                return raise(o, 5);
+                if (o.get("bet_index").getAsInt() < 2) {
+                    return raise(o, 5);
+                } else {
+                    return raise(o, 0);
+                }
             } else if (containsAce(holeCards)) {
-                return raise(o, 2);
+                if (o.get("bet_index").getAsInt() < 2) {
+                    return raise(o, 2);
+                } else {
+                    return raise(o, 0);
+                }
             } else if (isOneCardHigherThanNine(holeCards)) {
                 return 0;
             }
