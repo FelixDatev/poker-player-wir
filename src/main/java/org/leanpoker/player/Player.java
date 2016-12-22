@@ -86,11 +86,11 @@ public class Player {
 
 
 
-            System.out.println(input);
+            System.out.println(urlString);
 
 
 
-            URL url = new URL(input);
+            URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setDoInput(true);
