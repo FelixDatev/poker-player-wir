@@ -17,13 +17,27 @@ public class Player {
             for (JsonElement player: players ) {
                 JsonObject playerObj = player.getAsJsonObject();
                 if (playerObj.get("name").equals("WIR")) {
-                    return 1;
+
+
+                    return 5;
                 }
             }
         }
-        return 0;
+        return 2;
     }
 
     public static void showdown(JsonElement game) {
+    }
+
+    public boolean isPair(JsonArray holeCards) {
+
+        Card card1 = new Card(holeCards.get(0).getAsJsonObject());
+        Card card2 = new Card(holeCards.get(1).getAsJsonObject());
+
+        if (card1.rank == card2.rank) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
