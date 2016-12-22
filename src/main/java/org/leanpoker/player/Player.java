@@ -25,7 +25,7 @@ public class Player {
                     }
                 }
             }
-        return o.get("small_blind").getAsInt() * 2;
+        return o.get("small_blind").getAsInt() + o.get("current_buy_in").getAsInt();
     }
 
     public static void showdown(JsonElement game) {
