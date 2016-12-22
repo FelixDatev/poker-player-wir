@@ -114,15 +114,16 @@ public class Player {
                 while ((output = br.readLine()) != null) {
                     System.out.println(output);
                 }
+                String out = new String(output);
 
                 conn.disconnect();
 
 
 
                 JsonParser parser = new JsonParser();
-                if (parser.parse(output) != null) {
-                    JsonObject out = parser.parse(output).getAsJsonObject();
-                    return out.get("rank").getAsInt();
+                if (parser.parse(out) != null) {
+                    JsonObject out2 = parser.parse(output).getAsJsonObject();
+                    return out2.get("rank").getAsInt();
                 }
 
                 return 0;
