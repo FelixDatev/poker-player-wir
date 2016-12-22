@@ -1,9 +1,6 @@
 package org.leanpoker.player;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import jdk.nashorn.internal.runtime.URIUtils;
 
 import java.io.BufferedReader;
@@ -120,6 +117,8 @@ public class Player {
 
                 conn.disconnect();
 
+
+
                 JsonParser parser = new JsonParser();
                 if (parser.parse(output) != null) {
                     JsonObject out = parser.parse(output).getAsJsonObject();
@@ -132,13 +131,16 @@ public class Player {
             return 0;
 
         } catch (MalformedURLException e) {
-
             e.printStackTrace();
+            return 0;
 
         } catch (IOException e) {
-
             e.printStackTrace();
+            return 0;
 
+        } catch (NullPointerException e)  {
+            e.printStackTrace();
+            return 0;
         }
 
         return 0;
