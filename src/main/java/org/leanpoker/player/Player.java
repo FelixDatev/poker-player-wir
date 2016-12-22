@@ -58,13 +58,6 @@ public class Player {
 
         try {
 
-            URL url = new URL("http://rainman.leanpoker.org/rank");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-Type", "application/json");
-
-
             //INPUT:
             List<Card> cards = new ArrayList<Card>();
 
@@ -75,7 +68,7 @@ public class Player {
                 cards.add(new Card(ccard.getAsJsonObject()));
             }
             //String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
-            String input = "cards=[";
+            String input = "http://rainman.leanpoker.org/rank?cards=[";
 
             for (Card card:cards) {
                 String i = String.format("{\"rank\":\"%s\",\"suit\":\"%s\"},", card.rank, card.suit);
@@ -84,7 +77,16 @@ public class Player {
 
             input.concat("]");
 
-            input="";
+            URL url = new URL(input);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+
+
+
 
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
