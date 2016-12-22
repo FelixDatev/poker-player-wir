@@ -118,12 +118,15 @@ public class Player {
                     System.out.println(output);
                 }
 
-                JsonParser parser = new JsonParser();
-                JsonObject out = parser.parse(output).getAsJsonObject();
-
                 conn.disconnect();
 
-                return out.get("rank").getAsInt();
+                JsonParser parser = new JsonParser();
+                if (parser.parse(output) != null) {
+                    JsonObject out = parser.parse(output).getAsJsonObject();
+                    return out.get("rank").getAsInt();
+                }
+
+                return 0;
             }
 
             return 0;
