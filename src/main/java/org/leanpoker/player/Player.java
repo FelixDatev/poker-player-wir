@@ -28,8 +28,13 @@ public class Player {
 
         if (communityCards.size() > 2) {
             int rank = callRank(holeCards, communityCards);
+            if (rank > 2) {
+                return wir.get("stack").getAsInt();
+            } else {
+                return raise(o, 5*rank);
+            }
 
-            return raise(o, 5*rank);
+
         } else {
             if (isPair(holeCards)) {
                 return raise(o, 5);
