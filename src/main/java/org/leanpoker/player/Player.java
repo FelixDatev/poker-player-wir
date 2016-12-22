@@ -66,53 +66,53 @@ public class Player {
             for (JsonElement ccard : communityCards ) {
                 cards.add(new Card(ccard.getAsJsonObject()));
             }
-            //String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
-            String input = "[";
 
-            String separator = "";
+            if (cards.size() > 2) {
+                //String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
+                String input = "[";
 
-            for (Card card:cards) {
-                String i = String.format("%s{\"rank\":\"%s\",\"suit\":\"%s\"}", separator, card.rank, card.suit);
-                input = input.concat(i);
-                separator = ",";
+                String separator = "";
+
+                for (Card card : cards) {
+                    String i = String.format("%s{\"rank\":\"%s\",\"suit\":\"%s\"}", separator, card.rank, card.suit);
+                    input = input.concat(i);
+                    separator = ",";
+                }
+
+
+                input = input.concat("]");
+                input = URLEncoder.encode(input, "UTF-8");
+
+                String urlString = "http://rainman.leanpoker.org/rank?cards=".concat(input);
+
+
+                System.out.println(urlString);
+
+
+                URL url = new URL(urlString);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-Type", "application/json");
+
+
+                if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + conn.getResponseCode());
+                }
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                String output;
+                System.out.println("Output from Server .... \n");
+                while ((output = br.readLine()) != null) {
+                    System.out.println(output);
+                }
+
+                conn.disconnect();
             }
-
-
-
-            input = input.concat("]");
-            input = URLEncoder.encode(input, "UTF-8");
-
-            String urlString = "http://rainman.leanpoker.org/rank?cards=".concat(input);
-
-
-
-            System.out.println(urlString);
-
-
-
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-Type", "application/json");
-
-
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
-
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
 
         } catch (MalformedURLException e) {
 
