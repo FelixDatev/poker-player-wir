@@ -17,9 +17,10 @@ public class Player {
                 JsonObject playerObj = player.getAsJsonObject();
                 System.out.print("HOLAXXX");
                 if (playerObj.get("name").getAsString().equals("WIR")) {
-                    playerObj.get("");
-
-                    return 10;
+                    JsonArray holeCards = playerObj.get("hole_cards").getAsJsonArray();
+                    if ( isPair(holeCards) ) {
+                        return o.get("small_blind").getAsInt() * 100;
+                    }
                 }
             }
         return o.get("small_blind").getAsInt() * 2;
@@ -28,7 +29,7 @@ public class Player {
     public static void showdown(JsonElement game) {
     }
 
-    public boolean isPair(JsonArray holeCards) {
+    public static boolean isPair(JsonArray holeCards) {
 
         Card card1 = new Card(holeCards.get(0).getAsJsonObject());
         Card card2 = new Card(holeCards.get(1).getAsJsonObject());
