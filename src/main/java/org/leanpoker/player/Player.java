@@ -27,7 +27,7 @@ public class Player {
         JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
         JsonArray communityCards = o.get("community_cards").getAsJsonArray();
 
-        //callRank();
+        callRank(holeCards, communityCards);
 
         if ( isPair(holeCards) ) {
             return raise(o, 100);
@@ -54,7 +54,7 @@ public class Player {
         return o.get("current_buy_in").getAsInt() - wir.get("bet").getAsInt() + o.get("minimum_raise").getAsInt() + amount;
     }
 
-    public static void callRank() {
+    public static void callRank(JsonArray holeCards, JsonArray communityCards) {
 
         try {
 
@@ -64,8 +64,25 @@ public class Player {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
 
+
+            //INPUT:
+            List<Card> cards = new ArrayList<Card>();
+
+            cards.add(new Card(holeCards.get(0).getAsJsonObject()));
+            cards.add(new Card(holeCards.get(1).getAsJsonObject()));
+
+            for (JsonElement ccard : communityCards ) {
+                cards.add(new Card(ccard.getAsJsonObject()));
+            }
             //String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
-            String input = "";
+            String input = "cards=[";
+
+            for (Card card:cards) {
+                String i = String.format("{\"rank\":\"%s\",\"suit\":\"%s\"},", card.rank, card.suit);
+                input.concat(i);
+            }
+
+            input.concat("]");
 
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
