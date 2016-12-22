@@ -67,7 +67,7 @@ public class Player {
                 cards.add(new Card(ccard.getAsJsonObject()));
             }
             //String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
-            String input = "http://rainman.leanpoker.org/rank?cards=[";
+            String input = "cards=[";
 
             String separator = "";
 
@@ -80,8 +80,11 @@ public class Player {
 
 
             input = input.concat("]");
-
             input = URLEncoder.encode(input, "UTF-8");
+
+            String urlString = "http://rainman.leanpoker.org/rank?".concat(input);
+
+
 
             System.out.println(input);
 
