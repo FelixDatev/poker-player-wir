@@ -27,9 +27,9 @@ public class Player {
         JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
         JsonArray communityCards = o.get("community_cards").getAsJsonArray();
 
-        callRank();
+        //callRank();
 
-        if ( isPair(holeCards, communityCards) ) {
+        if ( isPair(holeCards) ) {
             return raise(o, 100);
         } else if (containsAce(holeCards) ) {
             return raise(o, 50);
@@ -98,17 +98,7 @@ public class Player {
         }
     }
 
-    public static boolean isPair(JsonArray holeCards, JsonArray communityCards) {
-
-        List<Card> cards = new ArrayList<Card>();
-
-        cards.add(new Card(holeCards.get(0).getAsJsonObject()));
-        cards.add(new Card(holeCards.get(1).getAsJsonObject()));
-
-        for (JsonElement ccard : communityCards ) {
-            cards.add(new Card(ccard.getAsJsonObject()));
-        }
-
+    public static boolean isPair(JsonArray holeCards) {
         Card card1 = new Card(holeCards.get(0).getAsJsonObject());
         Card card2 = new Card(holeCards.get(1).getAsJsonObject());
 
