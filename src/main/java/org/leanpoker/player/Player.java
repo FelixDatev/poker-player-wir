@@ -30,6 +30,8 @@ public class Player {
             int rank = callRank(holeCards, communityCards);
             if (rank > 2) {
                 return wir.get("stack").getAsInt();
+            } else if (rank == 0) {
+                return raise(o, 0);
             } else {
                 return raise(o, 5*rank);
             }
