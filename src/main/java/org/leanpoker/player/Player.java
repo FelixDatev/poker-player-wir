@@ -23,7 +23,7 @@ public class Player {
                     return 10;
                 }
             }
-        return 5;
+        return o.get("small_blind").getAsInt() * 2;
     }
 
     public static void showdown(JsonElement game) {
