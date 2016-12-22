@@ -72,10 +72,10 @@ public class Player {
 
             for (Card card:cards) {
                 String i = String.format("{\"rank\":\"%s\",\"suit\":\"%s\"},", card.rank, card.suit);
-                input.concat(i);
+                input = input.concat(i);
             }
 
-            input.concat("]");
+            input = input.concat("]");
 
             System.out.println(input);
 
@@ -85,7 +85,6 @@ public class Player {
             conn.setDoInput(true);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
-
 
 
 
