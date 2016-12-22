@@ -17,15 +17,27 @@ public class Player {
 
         JsonArray holeCards = wir.get("hole_cards").getAsJsonArray();
         if ( isPair(holeCards) ) {
-            return o.get("small_blind").getAsInt() * 100;
+            //return o.get("small_blind").getAsInt() * 100;
         } else if (containsAce(holeCards) ) {
-            return o.get("small_blind").getAsInt() * 50;
+            //return o.get("small_blind").getAsInt() * 50;
         }
 
-        return o.get("small_blind").getAsInt() + o.get("current_buy_in").getAsInt();
+        return raise(o, 0);
     }
 
     public static void showdown(JsonElement game) {
+    }
+
+    public static int fold() {
+        return 0;
+    }
+
+    public static int raise(JsonObject o, int amount) {
+        //     current_buy_in - players[in_action][bet] + minimum_raise
+        JsonArray players = o.get("players").getAsJsonArray();
+        JsonObject wir = players.get(o.get("in_action").getAsInt()).getAsJsonObject();
+
+        return o.get("current_buy_in").getAsInt() - wir.get("bet").getAsInt() + o.get("minimum_raise").getAsInt() + amount;
     }
 
     public static boolean isPair(JsonArray holeCards) {
