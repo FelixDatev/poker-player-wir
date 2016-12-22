@@ -20,6 +20,8 @@ public class Player {
                     JsonArray holeCards = playerObj.get("hole_cards").getAsJsonArray();
                     if ( isPair(holeCards) ) {
                         return o.get("small_blind").getAsInt() * 100;
+                    } else if (containsAce(holeCards) ) {
+                        return o.get("small_blind").getAsInt() * 50;
                     }
                 }
             }
@@ -35,6 +37,17 @@ public class Player {
         Card card2 = new Card(holeCards.get(1).getAsJsonObject());
 
         if (card1.rank == card2.rank) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean containsAce(JsonArray holeCards) {
+        Card card1 = new Card(holeCards.get(0).getAsJsonObject());
+        Card card2 = new Card(holeCards.get(1).getAsJsonObject());
+
+        if (card1.suit.equals("A") || card2.suit.equals("A")) {
             return true;
         } else {
             return false;
