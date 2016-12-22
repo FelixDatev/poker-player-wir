@@ -92,12 +92,6 @@ public class Player {
             conn.setRequestProperty("Content-Type", "application/json");
 
 
-
-
-            OutputStream os = conn.getOutputStream();
-            os.write(input.getBytes());
-            os.flush();
-
             if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
                 throw new RuntimeException("Failed : HTTP error code : "
                         + conn.getResponseCode());
