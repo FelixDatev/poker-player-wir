@@ -84,6 +84,8 @@ public class Player {
 
             input.concat("]");
 
+            input="";
+
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
             os.flush();
