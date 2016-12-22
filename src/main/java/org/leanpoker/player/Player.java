@@ -15,9 +15,8 @@ public class Player {
             JsonArray players = o.get("players").getAsJsonArray();
             for (JsonElement player: players ) {
                 JsonObject playerObj = player.getAsJsonObject();
-                System.out.print(playerObj);
-                System.err.print(playerObj);
-                if (playerObj.get("name").equals("WIR")) {
+                System.out.print("HOLAXXX");
+                if (playerObj.get("name").getAsString().equals("WIR")) {
                     playerObj.get("");
 
                     return 10;
