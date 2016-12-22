@@ -38,7 +38,7 @@ public class Player {
             }
         }
 
-        return 0;
+        return raise(o, 0);
     }
 
     public static void showdown(JsonElement game) {
