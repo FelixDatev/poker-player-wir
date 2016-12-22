@@ -29,12 +29,12 @@ public class Player {
         if (communityCards.size() > 2) {
             int rank = callRank(holeCards, communityCards);
 
-            return raise(o, 100*rank);
+            return raise(o, 5*rank);
         } else {
             if (isPair(holeCards)) {
-                return raise(o, 100);
+                return raise(o, 5);
             } else if (containsAce(holeCards)) {
-                return raise(o, 50);
+                return raise(o, 2);
             }
         }
 
@@ -54,7 +54,7 @@ public class Player {
         JsonArray players = o.get("players").getAsJsonArray();
         JsonObject wir = players.get(o.get("in_action").getAsInt()).getAsJsonObject();
 
-        return o.get("current_buy_in").getAsInt() - wir.get("bet").getAsInt() + o.get("minimum_raise").getAsInt() + amount;
+        return o.get("current_buy_in").getAsInt() - wir.get("bet").getAsInt() + o.get("minimum_raise").getAsInt() + (amount * o.get("small_blind").getAsInt());
     }
 
     public static int callRank(JsonArray holeCards, JsonArray communityCards) {
