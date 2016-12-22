@@ -45,7 +45,7 @@ public class Player {
         Card card1 = new Card(holeCards.get(0).getAsJsonObject());
         Card card2 = new Card(holeCards.get(1).getAsJsonObject());
 
-        if (card1.rank == card2.rank) {
+        if (card1.rank.equals(card2.rank)) {
             return true;
         } else {
             return false;
@@ -56,7 +56,7 @@ public class Player {
         Card card1 = new Card(holeCards.get(0).getAsJsonObject());
         Card card2 = new Card(holeCards.get(1).getAsJsonObject());
 
-        if (card1.suit.equals("A") || card2.suit.equals("A")) {
+        if (card1.rank.equals("A") || card2.rank.equals("A")) {
             return true;
         } else {
             return false;
