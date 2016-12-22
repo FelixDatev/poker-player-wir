@@ -19,10 +19,10 @@ public class Player {
                 if (playerObj.get("name").equals("WIR")) {
                     playerObj.get("");
 
-                    return 5;
+                    return 10;
                 }
             }
-        return 2;
+        return 5;
     }
 
     public static void showdown(JsonElement game) {
