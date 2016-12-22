@@ -109,24 +109,23 @@ public class Player {
                 BufferedReader br = new BufferedReader(new InputStreamReader(
                         (conn.getInputStream())));
 
+                StringBuilder sb = new StringBuilder();
+
                 String output;
                 System.out.println("Output from Server .... \n");
                 while ((output = br.readLine()) != null) {
                     System.out.println(output);
+                    sb.append(output);
                 }
-                String out = new String(output);
 
                 conn.disconnect();
 
 
 
                 JsonParser parser = new JsonParser();
-                if (parser.parse(out) != null) {
-                    JsonObject out2 = parser.parse(output).getAsJsonObject();
+                    JsonObject out2 = parser.parse(sb.toString()).getAsJsonObject();
                     return out2.get("rank").getAsInt();
-                }
 
-                return 0;
             }
 
             return 0;
