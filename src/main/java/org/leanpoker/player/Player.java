@@ -143,7 +143,6 @@ public class Player {
             return 0;
         }
 
-        return 0;
     }
 
     public static boolean isPair(JsonArray holeCards) {
